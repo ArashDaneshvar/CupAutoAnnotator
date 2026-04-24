@@ -619,6 +619,7 @@ class AnnotationApp(tk.Tk):
             ("R-Click", "Delete/Cancel"),
             ("Dbl Cl.", "Change class"),
             ("p",       "Predict current"),
+            ("d",       "Delete Current Annotation"),
         ]):
             ttk.Label(right, text=k, foreground="#89b4fa",
                       font=("Consolas", 8)).grid(row=10+i, column=0, sticky="w")
@@ -814,6 +815,7 @@ class AnnotationApp(tk.Tk):
         self.bind("<Right>",     lambda e: self.next_image())
         self.bind("<Control-s>", lambda e: self.save_current())
         self.bind("<p>",         lambda e: self.predict_current())
+        self.bind("<d>",         lambda e: self.clear_current())
 
     def open_folder(self):
         path = filedialog.askdirectory(title="Select images folder")
@@ -908,6 +910,11 @@ class AnnotationApp(tk.Tk):
         self.canvas._clear_canvas_annotations()
         self.canvas.load_annotations()
         self.status_var.set("Batch prediction complete.")
+
+    def clear_current(self):
+        if not messagebox.askyesno("Confirm",
+                "Clear Current Annotation? Existing labels will be removed."): return
+        self.canvas._clear_canvas_annotations()
 
     # ==========================================================================
     # TRAINING LOGIC
