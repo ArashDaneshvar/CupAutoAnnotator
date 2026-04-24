@@ -4,5 +4,7 @@ Pillow>=10.0.0
 # YOLO and Computer Vision library (optional but recommended for AI features)
 ultralytics>=8.0.0
 
+# matplotlib (for training)
+
 # Note: Tkinter is part of Python's standard library.
 # If you are on Linux (e.g., Ubuntu), you may need: sudo apt-get install python3-tk
