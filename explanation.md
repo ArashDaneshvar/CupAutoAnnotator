@@ -189,13 +189,14 @@ The interface is divided into three panels:
 
 ## Keyboard Shortcuts
 
-| Key          | Action          |
-| ------------ | --------------- |
-| Left / Right | Navigate images |
-| Ctrl + S     | Save            |
-| Left Click   | Draw box        |
-| Right Click  | Delete box      |
-| Double Click | Change class    |
+| Key          | Action                |
+| ------------ | ----------------------|
+| Left / Right | Navigate images       |
+| Ctrl + S     | Save                  |
+| Left Click   | Draw box              |
+| Right Click  | Delete box            |
+| Double Click | Change class          |
+| P key        | Predict current Image |
 
 ---
 
