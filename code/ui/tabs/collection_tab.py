@@ -34,10 +34,10 @@ class CollectionTab(ttk.Frame):
         self.controls_frame = ttk.Frame(self)
         self.controls_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
-        ttk.Label(self.controls_frame, text="Control Panel",
-                  font=("Arial", 12, "bold")).pack(pady=10)
-        ttk.Label(self.controls_frame, text="Storage Settings",
-                  font=("Arial", 10, "bold")).pack(pady=5)
+        # ttk.Label(self.controls_frame, text="Control Panel",
+        #           font=("Arial", 12, "bold")).pack(pady=10)
+        # ttk.Label(self.controls_frame, text="Storage Settings",
+        #           font=("Arial", 10, "bold")).pack(pady=5)
 
         self.path_label = ttk.Label(self.controls_frame,
                                     text="Path: Not Selected",
@@ -50,7 +50,7 @@ class CollectionTab(ttk.Frame):
         ttk.Separator(self.controls_frame, orient="horizontal").pack(fill="x", pady=10)
 
         ttk.Button(self.controls_frame, text="✨ New Project Folder",
-                   command=self.create_new_project).pack(fill=tk.X, pady=2)
+                   command=self.on_create_project_click).pack(fill=tk.X, pady=2)
 
         ttk.Separator(self.controls_frame, orient="horizontal").pack(fill="x", pady=10)
 
@@ -182,35 +182,55 @@ class CollectionTab(ttk.Frame):
             self.capture_controller.reset_count()
             self.set_status(f"Folder set: {selected_path}")
 
-    def create_new_project(self):
+    def on_create_project_click(self):
+        # from tkinter import simpledialog, messagebox
+        # import os
+
+        # project_name = simpledialog.askstring("New Project", "Enter Project Name:")
+        # if not project_name:
+        #     return
+
+        # import config
+        # full_path = os.path.join(os.getcwd(), config.DEFAULT_DATASET_FOLDER, project_name)
+
+        # try:
+        #     # Actually create the subfolders this time
+        #     for sub in ("color", "depth", "ir"):
+        #         os.makedirs(os.path.join(full_path, sub), exist_ok=True)
+
+        #     self.shared_data.set_folder_path(full_path)
+        #     self._update_path_label(project_name, ok=True)
+        #     self.capture_controller.reset_count()
+
+        #     messagebox.showinfo(
+        #         "Success",
+        #         f"Project '{project_name}' created!\nSubfolders (color, depth, ir) are ready."
+        #     )
+        #     self.set_status(f"New project: {project_name}")
+
+        # except Exception as e:
+        #     messagebox.showerror("Error", f"Could not create folders: {e}")
+        #     self.set_status(f"Error creating project: {e}", error=True)
+
+
         from tkinter import simpledialog, messagebox
-        import os
 
         project_name = simpledialog.askstring("New Project", "Enter Project Name:")
         if not project_name:
             return
 
-        import config
-        full_path = os.path.join(os.getcwd(), config.DEFAULT_DATASET_FOLDER, project_name)
-
         try:
-            # Actually create the subfolders this time
-            for sub in ("color", "depth", "ir"):
-                os.makedirs(os.path.join(full_path, sub), exist_ok=True)
+            full_path = self.shared_data.create_new_project(project_name)
 
-            self.shared_data.set_folder_path(full_path)
             self._update_path_label(project_name, ok=True)
             self.capture_controller.reset_count()
-
-            messagebox.showinfo(
-                "Success",
-                f"Project '{project_name}' created!\nSubfolders (color, depth, ir) are ready."
-            )
             self.set_status(f"New project: {project_name}")
+            
+            messagebox.showinfo("Success", f"Project '{project_name}' is ready!")
 
         except Exception as e:
-            messagebox.showerror("Error", f"Could not create folders: {e}")
-            self.set_status(f"Error creating project: {e}", error=True)
+            messagebox.showerror("Error", f"Could not create project: {e}")
+            self.set_status("Error creating project", error=True)
 
     # ------------------------------------------------------------------
     # Helpers
